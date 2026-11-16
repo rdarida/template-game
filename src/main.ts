@@ -1,1 +1,1 @@
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = 'Hello, World';
+document.querySelector<HTMLDivElement>('#app')!.innerHTML = 'Hello, World!';
