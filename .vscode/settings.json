@@ -18,6 +18,7 @@
     ".prettierignore": true,
     ".prettierrc": true,
     "index.html": true,
+    "LICENSE": true,
     "package-lock.json": true,
     "tsconfig.json": true,
     "vite.config.ts": true,
