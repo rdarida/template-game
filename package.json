@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "prettier": "prettier . --check",
+    "pretest": "rimraf coverage",
+    "test": "vitest",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -17,10 +19,12 @@
   "devDependencies": {
     "@types/node": "^26.6.6",
     "@types/webfontloader": "^1.6.38",
+    "@vitest/coverage-istanbul": "^5.1.0",
     "prettier": "^3.10.1",
     "prettier-plugin-brace-style": "^0.10.4",
     "rimraf": "^6.1.4",
     "typescript": "~7.0.2",
-    "vite": "^8.3.6"
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
   }
 }
