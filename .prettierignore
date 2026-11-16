@@ -2,6 +2,8 @@ coverage
 dist
 docs
 node_modules
+public
+resources
 
 yarn.lock
 package-lock.json
