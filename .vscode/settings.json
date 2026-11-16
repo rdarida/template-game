@@ -1,0 +1,26 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.jj": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+
+    ".assetpack": true,
+    "dist": true,
+    "node_modules": true,
+    "public/assets": false,
+    "resources": false,
+
+    ".assetpack.js": true,
+    ".editorconfig": true,
+    ".prettierignore": true,
+    ".prettierrc": true,
+    "index.html": true,
+    "package-lock.json": true,
+    "tsconfig.json": true,
+    "vite.config.ts": true,
+    "vitest.config.ts": true
+  }
+}

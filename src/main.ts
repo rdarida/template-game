@@ -1,1 +1,1 @@
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = 'Hello, World!';
+document.body.appendChild(document.createTextNode('Hello, World!'));
