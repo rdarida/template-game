@@ -4,10 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "lint": "tsc",
     "prettier": "prettier . --check",
     "pretest": "rimraf coverage",
     "test": "vitest",
+    "preassetpack": "rimraf .assetpack public/assets",
+    "assetpack": "assetpack",
+    "predev": "npm run assetpack",
     "dev": "vite",
+    "prebuild": "npm run assetpack",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -17,6 +22,7 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
+    "@assetpack/core": "^1.7.0",
     "@types/node": "^26.6.6",
     "@types/webfontloader": "^1.6.38",
     "@vitest/coverage-istanbul": "^5.1.0",

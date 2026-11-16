@@ -1,3 +1,7 @@
+# AssetPack
+.assetpack
+public/assets
+
 # Logs
 logs
 *.log
