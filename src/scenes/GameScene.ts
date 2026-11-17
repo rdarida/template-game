@@ -24,10 +24,10 @@ export class GameScene extends Scene {
     this._text.y = Math.round(HEIGHT * 0.5) - 100;
     this.addChild(this._text);
 
-    this._buttons = [-160, 0, 160].map(i => {
+    this._buttons = [-160, 0, 160].map(offset => {
       const button = new TextButton();
-      button.value = 300 + i;
-      button.x = Math.round(WIDTH * 0.5) + i;
+      button.value = 300 + offset;
+      button.x = Math.round(WIDTH * 0.5) + offset;
       button.y = Math.round(HEIGHT * 0.5) + 100;
       this.addChild(button);
       return button;
