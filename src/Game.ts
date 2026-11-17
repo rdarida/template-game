@@ -17,7 +17,18 @@ export class Game extends Application {
       bundles: [
         {
           name: 'default',
-          assets: []
+          assets: [
+            {
+              alias: 'atlas_0',
+              src: 'atlas_0.json',
+              data: { tags: { tps: true } }
+            },
+            {
+              alias: 'Roboto Condensed Black',
+              src: 'RobotoCondensed-Black.woff2'
+            },
+            { alias: 'click', src: 'sounds/click.mp3' }
+          ]
         }
       ]
     };
