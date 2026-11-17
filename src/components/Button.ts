@@ -20,11 +20,17 @@ export class PlayButton extends ButtonBase {
 }
 
 export class TextButton extends ButtonBase {
+  private readonly _text: Text;
+
   constructor(value: number | string = '') {
     super(Assets.get('atlas_0').textures.button_bg);
 
-    const text = new Text(value, { align: 'center', fontSize: 32 });
-    text.anchor.set(0.5);
-    this.addChild(text);
+    this._text = new Text(value, { align: 'center', fontSize: 32 });
+    this._text.anchor.set(0.5);
+    this.addChild(this._text);
+  }
+
+  public set value(value: number | string) {
+    this._text.text = String(value);
   }
 }

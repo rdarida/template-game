@@ -6,26 +6,31 @@ import { Scene } from '../display';
 import { SceneEvent } from '../events';
 
 export class GameScene extends Scene {
+  private readonly _text: Text;
+  private readonly _buttons: TextButton[];
+
   constructor() {
     super(SceneName.GAME);
 
-    const text = new Text('100 + 100 + 100', {
+    this._text = new Text('100 + 100 + 100', {
       align: 'center',
       fontSize: 64,
       fontStyle: 'normal',
       fontWeight: '900'
     });
 
-    text.anchor.set(0.5);
-    text.x = Math.round(WIDTH * 0.5);
-    text.y = Math.round(HEIGHT * 0.5) - 100;
-    this.addChild(text);
+    this._text.anchor.set(0.5);
+    this._text.x = Math.round(WIDTH * 0.5);
+    this._text.y = Math.round(HEIGHT * 0.5) - 100;
+    this.addChild(this._text);
 
-    [-160, 0, 160].forEach(i => {
-      const textButton = new TextButton(300 + i);
-      textButton.x = Math.round(WIDTH * 0.5) + i;
-      textButton.y = Math.round(HEIGHT * 0.5) + 100;
-      this.addChild(textButton);
+    this._buttons = [-160, 0, 160].map(i => {
+      const button = new TextButton();
+      button.value = 300 + i;
+      button.x = Math.round(WIDTH * 0.5) + i;
+      button.y = Math.round(HEIGHT * 0.5) + 100;
+      this.addChild(button);
+      return button;
     });
 
     const playButton = new PlayButton();
