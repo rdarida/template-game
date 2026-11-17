@@ -3,7 +3,7 @@ import { Text } from 'pixi.js';
 import { PlayButton, TextButton } from '../components';
 import { HEIGHT, SceneName, WIDTH } from '../constants';
 import { Scene } from '../display';
-import { SceneEvent } from '../events';
+import { GameEvent, SceneEvent } from '../events';
 
 export class GameScene extends Scene {
   private readonly _text: Text;
@@ -38,8 +38,29 @@ export class GameScene extends Scene {
     playButton.y = Math.round(HEIGHT * 0.5);
     this.addChild(playButton);
 
-    playButton.on('pointertap', () =>
-      this.emit(SceneEvent.EVENT, SceneName.MAIN)
-    );
+    playButton.on('pointertap', () => this.actionHandler(GameEvent.HOME));
+  }
+
+  public override onEnter(): void {
+    super.onEnter();
+
+    this.actionHandler(GameEvent.PLAY);
+  }
+
+  private actionHandler(action: GameEvent): void {
+    switch (action) {
+      case GameEvent.PLAY:
+        this._text.text = '100 + 100 + 100';
+
+        this._buttons.forEach((button, i) => {
+          button.value = 300 + i * 160;
+        });
+
+        break;
+
+      case GameEvent.HOME:
+        this.emit(SceneEvent.EVENT, SceneName.MAIN);
+        break;
+    }
   }
 }
