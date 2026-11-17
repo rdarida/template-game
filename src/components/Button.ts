@@ -7,6 +7,8 @@ class ButtonBase extends Button {
   constructor(...textures: Texture[]) {
     super(...textures);
 
+    this.anchor.set(0.5);
+
     this.on('pointertap', () => sound.play('click'));
   }
 }
