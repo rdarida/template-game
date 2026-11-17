@@ -2,7 +2,7 @@ import { Application, Assets, type AssetsManifest } from 'pixi.js';
 
 import { HEIGHT, WIDTH } from './constants';
 import { SceneManager } from './display';
-import { MainScene } from './scenes';
+import { GameScene, MainScene } from './scenes';
 
 export class Game extends Application {
   private readonly _sceneManager: SceneManager;
@@ -17,6 +17,7 @@ export class Game extends Application {
 
     this._sceneManager = new SceneManager(this.stage);
     this._sceneManager.addScene(new MainScene());
+    this._sceneManager.addScene(new GameScene());
   }
 
   public static async load(): Promise<void> {
