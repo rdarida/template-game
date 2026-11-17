@@ -1,15 +1,22 @@
 import { Application, Assets, type AssetsManifest } from 'pixi.js';
 
 import { HEIGHT, WIDTH } from './constants';
+import { SceneManager } from './display';
+import { MainScene } from './scenes';
 
 export class Game extends Application {
+  private readonly _sceneManager: SceneManager;
+
   constructor() {
     super({
       antialias: true,
-      backgroundColor: '#000000',
+      backgroundColor: '#cccccc',
       width: WIDTH,
       height: HEIGHT
     });
+
+    this._sceneManager = new SceneManager(this.stage);
+    this._sceneManager.addScene(new MainScene());
   }
 
   public static async load(): Promise<void> {
