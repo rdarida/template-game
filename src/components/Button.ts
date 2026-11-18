@@ -52,6 +52,12 @@ export class CloseButton extends ButtonBase {
   }
 }
 
+export class MenuButton extends ButtonBase {
+  constructor() {
+    super(Assets.get('atlas_0').textures.button_menu);
+  }
+}
+
 export class TextButton extends ButtonBase {
   private readonly _text: Text;
 

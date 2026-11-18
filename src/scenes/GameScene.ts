@@ -1,6 +1,6 @@
 import { Text } from 'pixi.js';
 
-import { TextButton } from '../components';
+import { MenuButton, TextButton } from '../components';
 import { HEIGHT, WIDTH } from '../constants';
 import { Scene } from '../display';
 import { GameEvent, SceneEvent } from '../events';
@@ -51,6 +51,11 @@ export class GameScene extends Scene {
       this.addChild(button);
       return button;
     });
+
+    const menuButton = new MenuButton();
+    menuButton.x = WIDTH - menuButton.width;
+    menuButton.y = menuButton.height;
+    this.addChild(menuButton);
   }
 
   public override onEnter(): void {
