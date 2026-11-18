@@ -3,6 +3,7 @@ import { Text } from 'pixi.js';
 import { ScoreText, TextButton } from '../components';
 import { Panel } from '../display';
 import { GameEvent } from '../events';
+import type { Riddle } from '../logic';
 
 export class Board extends Panel {
   private readonly _scoreText: Text;
@@ -40,12 +41,14 @@ export class Board extends Panel {
     });
   }
 
-  public init(score: number): void {
+  public init(riddle: Riddle): void {
+    const { score, values, answers } = riddle;
+
     this._scoreText.text = `Score: ${score}`;
-    this._riddleText.text = '100 + 100 + 100';
+    this._riddleText.text = values.join(' + ');
 
     this._buttons.forEach((button, i) => {
-      button.value = 300 + i * Math.round(Math.random() * 160 + 16);
+      button.value = answers[i];
     });
 
     this.enable();

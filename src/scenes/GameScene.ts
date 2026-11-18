@@ -4,11 +4,12 @@ import { Board, GameOverPanel, MenuButton, PausePanel } from '../components';
 import { HEIGHT, WIDTH } from '../constants';
 import { Scene } from '../display';
 import { GameEvent, SceneEvent } from '../events';
+import { Logic } from '../logic';
 
 import { SceneName } from './SceneName';
 
 export class GameScene extends Scene {
-  private _score: number;
+  private readonly _logic: Logic;
   private readonly _menuButton: MenuButton;
   private readonly _board: Board;
   private readonly _shade: Graphics;
@@ -18,7 +19,7 @@ export class GameScene extends Scene {
   constructor() {
     super(SceneName.GAME);
 
-    this._score = 0;
+    this._logic = new Logic();
 
     this._menuButton = new MenuButton();
     this._menuButton.x = WIDTH - this._menuButton.width;
@@ -66,19 +67,18 @@ export class GameScene extends Scene {
   private actionHandler<T>(action: GameEvent, data?: T): void {
     switch (action) {
       case GameEvent.INIT:
-        this._score = 0;
+        this._logic.init();
 
       case GameEvent.PLAY:
         this._menuButton.enable();
-        this._board.init(this._score);
+        this._board.init(this._logic.getRiddle());
         this._shade.visible = false;
         this._gameOverPanel.disable(true);
         this._pausePanel.disable(true);
         break;
 
       case GameEvent.ANSWER:
-        if (data !== undefined && data === 0) {
-          this._score += 1;
+        if (data !== undefined && this._logic.evaluateAnswer(Number(data))) {
           this.actionHandler(GameEvent.PLAY);
           break;
         }
@@ -86,7 +86,7 @@ export class GameScene extends Scene {
         this._menuButton.disable(true);
         this._board.disable();
         this._shade.visible = true;
-        this._gameOverPanel.show(this._score);
+        this._gameOverPanel.show(this._logic.getScore());
         break;
 
       case GameEvent.PAUSE:
