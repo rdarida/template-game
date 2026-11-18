@@ -1,6 +1,12 @@
 import { Text } from 'pixi.js';
 
-import { MenuButton, PausePanel, TextButton } from '../components';
+import {
+  GameOverPanel,
+  MenuButton,
+  PausePanel,
+  TextButton
+} from '../components';
+
 import { HEIGHT, WIDTH } from '../constants';
 import { Scene } from '../display';
 import { GameEvent, SceneEvent } from '../events';
@@ -13,6 +19,7 @@ export class GameScene extends Scene {
   private readonly _text: Text;
   private readonly _buttons: TextButton[];
   private readonly _menuButton: MenuButton;
+  private readonly _gameOverPanel: GameOverPanel;
   private readonly _pausePanel: PausePanel;
 
   constructor() {
@@ -59,6 +66,11 @@ export class GameScene extends Scene {
     this._menuButton.y = this._menuButton.height;
     this.addChild(this._menuButton);
 
+    this._gameOverPanel = new GameOverPanel();
+    this._gameOverPanel.x = Math.round(WIDTH * 0.5);
+    this._gameOverPanel.y = Math.round(HEIGHT * 0.5);
+    this.addChild(this._gameOverPanel);
+
     this._pausePanel = new PausePanel();
     this._pausePanel.x = Math.round(WIDTH * 0.5);
     this._pausePanel.y = Math.round(HEIGHT * 0.5);
@@ -70,6 +82,7 @@ export class GameScene extends Scene {
       this.actionHandler(GameEvent.PAUSE)
     );
 
+    this._gameOverPanel.on(GameEvent.EVENT, boundActionHandler);
     this._pausePanel.on(GameEvent.EVENT, boundActionHandler);
   }
 
@@ -93,6 +106,7 @@ export class GameScene extends Scene {
         });
 
         this._menuButton.enable();
+        this._gameOverPanel.disable(true);
         this._pausePanel.disable(true);
         break;
 
@@ -103,7 +117,8 @@ export class GameScene extends Scene {
           break;
         }
 
-        this.emit(SceneEvent.EVENT, SceneName.MAIN);
+        this._menuButton.disable(true);
+        this._gameOverPanel.show(this._score);
         break;
 
       case GameEvent.PAUSE:
