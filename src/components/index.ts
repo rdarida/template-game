@@ -1,3 +1,4 @@
+export * from './Board';
 export * from './Button';
 export * from './GameOverPanel';
 export * from './Logo';

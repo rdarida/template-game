@@ -1,13 +1,4 @@
-import { Text } from 'pixi.js';
-
-import {
-  GameOverPanel,
-  MenuButton,
-  PausePanel,
-  ScoreText,
-  TextButton
-} from '../components';
-
+import { Board, GameOverPanel, MenuButton, PausePanel } from '../components';
 import { HEIGHT, WIDTH } from '../constants';
 import { Scene } from '../display';
 import { GameEvent, SceneEvent } from '../events';
@@ -16,10 +7,8 @@ import { SceneName } from './SceneName';
 
 export class GameScene extends Scene {
   private _score: number;
-  private readonly _scoreText: Text;
-  private readonly _text: Text;
-  private readonly _buttons: TextButton[];
   private readonly _menuButton: MenuButton;
+  private readonly _board: Board;
   private readonly _gameOverPanel: GameOverPanel;
   private readonly _pausePanel: PausePanel;
 
@@ -28,36 +17,15 @@ export class GameScene extends Scene {
 
     this._score = 0;
 
-    this._scoreText = new ScoreText();
-    this._scoreText.x = Math.round(WIDTH * 0.5);
-    this._scoreText.y = Math.round(HEIGHT * 0.5) - 160;
-    this.addChild(this._scoreText);
-
-    this._text = new Text('100 + 100 + 100', {
-      align: 'center',
-      fontSize: 64,
-      fontStyle: 'normal',
-      fontWeight: '900'
-    });
-
-    this._text.anchor.set(0.5);
-    this._text.x = Math.round(WIDTH * 0.5);
-    this._text.y = Math.round(HEIGHT * 0.5);
-    this.addChild(this._text);
-
-    this._buttons = [-160, 0, 160].map((offset, i) => {
-      const button = new TextButton();
-      button.x = Math.round(WIDTH * 0.5) + offset;
-      button.y = Math.round(HEIGHT * 0.5) + 160;
-      button.on('pointertap', () => this.actionHandler(GameEvent.ANSWER, i));
-      this.addChild(button);
-      return button;
-    });
-
     this._menuButton = new MenuButton();
     this._menuButton.x = WIDTH - this._menuButton.width;
     this._menuButton.y = this._menuButton.height;
     this.addChild(this._menuButton);
+
+    this._board = new Board();
+    this._board.x = Math.round(WIDTH * 0.5);
+    this._board.y = Math.round(HEIGHT * 0.5);
+    this.addChild(this._board);
 
     this._gameOverPanel = new GameOverPanel();
     this._gameOverPanel.x = Math.round(WIDTH * 0.5);
@@ -75,6 +43,7 @@ export class GameScene extends Scene {
       this.actionHandler(GameEvent.PAUSE)
     );
 
+    this._board.on(GameEvent.EVENT, boundActionHandler);
     this._gameOverPanel.on(GameEvent.EVENT, boundActionHandler);
     this._pausePanel.on(GameEvent.EVENT, boundActionHandler);
   }
@@ -91,14 +60,8 @@ export class GameScene extends Scene {
         this._score = 0;
 
       case GameEvent.PLAY:
-        this._scoreText.text = `Score: ${this._score}`;
-        this._text.text = '100 + 100 + 100';
-
-        this._buttons.forEach((button, i) => {
-          button.value = 300 + i * Math.round(Math.random() * 160 + 16);
-        });
-
         this._menuButton.enable();
+        this._board.init(this._score);
         this._gameOverPanel.disable(true);
         this._pausePanel.disable(true);
         break;
@@ -111,11 +74,13 @@ export class GameScene extends Scene {
         }
 
         this._menuButton.disable(true);
+        this._board.disable();
         this._gameOverPanel.show(this._score);
         break;
 
       case GameEvent.PAUSE:
         this._menuButton.disable(true);
+        this._board.disable();
         this._pausePanel.enable();
         break;
 
@@ -125,6 +90,7 @@ export class GameScene extends Scene {
 
       case GameEvent.CONTINUE:
         this._menuButton.enable();
+        this._board.enable();
         this._pausePanel.disable(true);
         break;
     }
