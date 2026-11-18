@@ -1,7 +1,6 @@
 import { Text } from 'pixi.js';
 
 import { ScoreText, TextButton } from '../components';
-import { HEIGHT, WIDTH } from '../constants';
 import { Panel } from '../display';
 import { GameEvent } from '../events';
 
