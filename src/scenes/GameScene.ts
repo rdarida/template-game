@@ -4,6 +4,7 @@ import {
   GameOverPanel,
   MenuButton,
   PausePanel,
+  ScoreText,
   TextButton
 } from '../components';
 
@@ -27,15 +28,7 @@ export class GameScene extends Scene {
 
     this._score = 0;
 
-    this._scoreText = new Text('', {
-      align: 'center',
-      fill: '#ff0000',
-      fontSize: 48,
-      fontStyle: 'normal',
-      fontWeight: '900'
-    });
-
-    this._scoreText.anchor.set(0.5);
+    this._scoreText = new ScoreText();
     this._scoreText.x = Math.round(WIDTH * 0.5);
     this._scoreText.y = Math.round(HEIGHT * 0.5) - 160;
     this.addChild(this._scoreText);

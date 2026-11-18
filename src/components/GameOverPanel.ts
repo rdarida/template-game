@@ -4,7 +4,7 @@ import { Panel } from '../display';
 import { GameEvent } from '../events';
 
 import { HomeButton, PlayAgainButton } from './Button';
-import { HEIGHT, WIDTH } from '../constants';
+import { ScoreText } from './ScoreText';
 
 export class GameOverPanel extends Panel {
   private readonly _scoreText: Text;
@@ -14,15 +14,7 @@ export class GameOverPanel extends Panel {
 
     this.anchor.set(0.5);
 
-    this._scoreText = new Text('', {
-      align: 'center',
-      fill: '#ff0000',
-      fontSize: 48,
-      fontStyle: 'normal',
-      fontWeight: '900'
-    });
-
-    this._scoreText.anchor.set(0.5);
+    this._scoreText = new ScoreText();
     this.addChild(this._scoreText);
 
     const homeButton = new HomeButton();
