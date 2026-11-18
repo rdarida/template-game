@@ -19,6 +19,39 @@ export class PlayButton extends ButtonBase {
   }
 }
 
+export class SoundToggleButton extends ButtonBase {
+  constructor() {
+    super(...Assets.get('atlas_0').animations.button_sound);
+
+    this.currentFrame = 0;
+
+    this.on('pointertap', () => {
+      switch (this.currentFrame) {
+        case 0:
+          this.currentFrame = 1;
+          sound.muteAll();
+          break;
+        case 1:
+          this.currentFrame = 0;
+          sound.unmuteAll();
+          break;
+      }
+    });
+  }
+}
+
+export class InfoButton extends ButtonBase {
+  constructor() {
+    super(Assets.get('atlas_0').textures.button_info);
+  }
+}
+
+export class CloseButton extends ButtonBase {
+  constructor() {
+    super(Assets.get('atlas_0').textures.button_close);
+  }
+}
+
 export class TextButton extends ButtonBase {
   private readonly _text: Text;
 
@@ -32,17 +65,5 @@ export class TextButton extends ButtonBase {
 
   public set value(value: number | string) {
     this._text.text = String(value);
-  }
-}
-
-export class InfoButton extends ButtonBase {
-  constructor() {
-    super(Assets.get('atlas_0').textures.button_info);
-  }
-}
-
-export class CloseButton extends ButtonBase {
-  constructor() {
-    super(Assets.get('atlas_0').textures.button_close);
   }
 }

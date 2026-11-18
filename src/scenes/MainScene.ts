@@ -1,4 +1,4 @@
-import { InfoButton, Logo, PlayButton } from '../components';
+import { InfoButton, Logo, PlayButton, SoundToggleButton } from '../components';
 import { HEIGHT, WIDTH } from '../constants';
 import { Scene } from '../display';
 import { SceneEvent } from '../events';
@@ -18,6 +18,11 @@ export class MainScene extends Scene {
     playButton.x = Math.round(WIDTH * 0.5);
     playButton.y = Math.round(HEIGHT * 0.5) + 80;
     this.addChild(playButton);
+
+    const soundButton = new SoundToggleButton();
+    soundButton.x = soundButton.width;
+    soundButton.y = soundButton.height;
+    this.addChild(soundButton);
 
     const infoButton = new InfoButton();
     infoButton.x = WIDTH - infoButton.width;
