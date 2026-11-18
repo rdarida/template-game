@@ -7,7 +7,7 @@ import { ContinueButton, HomeButton } from './Button';
 
 export class PausePanel extends Panel {
   constructor() {
-    super(Assets.get('atlas_0').textures.pause);
+    super(Assets.get('atlas_0').textures.panel_pause);
 
     this.anchor.set(0.5);
 

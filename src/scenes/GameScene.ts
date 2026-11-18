@@ -1,6 +1,6 @@
 import { Text } from 'pixi.js';
 
-import { MenuButton, TextButton } from '../components';
+import { MenuButton, PausePanel, TextButton } from '../components';
 import { HEIGHT, WIDTH } from '../constants';
 import { Scene } from '../display';
 import { GameEvent, SceneEvent } from '../events';
@@ -12,6 +12,8 @@ export class GameScene extends Scene {
   private readonly _scoreText: Text;
   private readonly _text: Text;
   private readonly _buttons: TextButton[];
+  private readonly _menuButton: MenuButton;
+  private readonly _pausePanel: PausePanel;
 
   constructor() {
     super(SceneName.GAME);
@@ -52,10 +54,23 @@ export class GameScene extends Scene {
       return button;
     });
 
-    const menuButton = new MenuButton();
-    menuButton.x = WIDTH - menuButton.width;
-    menuButton.y = menuButton.height;
-    this.addChild(menuButton);
+    this._menuButton = new MenuButton();
+    this._menuButton.x = WIDTH - this._menuButton.width;
+    this._menuButton.y = this._menuButton.height;
+    this.addChild(this._menuButton);
+
+    this._pausePanel = new PausePanel();
+    this._pausePanel.x = Math.round(WIDTH * 0.5);
+    this._pausePanel.y = Math.round(HEIGHT * 0.5);
+    this.addChild(this._pausePanel);
+
+    const boundActionHandler = this.actionHandler.bind(this);
+
+    this._menuButton.on('pointertap', () =>
+      this.actionHandler(GameEvent.PAUSE)
+    );
+
+    this._pausePanel.on(GameEvent.EVENT, boundActionHandler);
   }
 
   public override onEnter(): void {
@@ -71,13 +86,14 @@ export class GameScene extends Scene {
 
       case GameEvent.PLAY:
         this._scoreText.text = `Score: ${this._score}`;
-
         this._text.text = '100 + 100 + 100';
 
         this._buttons.forEach((button, i) => {
           button.value = 300 + i * Math.round(Math.random() * 160 + 16);
         });
 
+        this._menuButton.enable();
+        this._pausePanel.disable(true);
         break;
 
       case GameEvent.ANSWER:
@@ -88,11 +104,20 @@ export class GameScene extends Scene {
         }
 
         this.emit(SceneEvent.EVENT, SceneName.MAIN);
+        break;
 
+      case GameEvent.PAUSE:
+        this._menuButton.disable(true);
+        this._pausePanel.enable();
         break;
 
       case GameEvent.HOME:
         this.emit(SceneEvent.EVENT, SceneName.MAIN);
+        break;
+
+      case GameEvent.CONTINUE:
+        this._menuButton.enable();
+        this._pausePanel.disable(true);
         break;
     }
   }
