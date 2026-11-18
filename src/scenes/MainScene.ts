@@ -19,11 +19,6 @@ export class MainScene extends Scene {
     playButton.y = Math.round(HEIGHT * 0.5) + 80;
     this.addChild(playButton);
 
-    const soundButton = new SoundToggleButton();
-    soundButton.x = soundButton.width;
-    soundButton.y = soundButton.height;
-    this.addChild(soundButton);
-
     const infoButton = new InfoButton();
     infoButton.x = WIDTH - infoButton.width;
     infoButton.y = infoButton.height;

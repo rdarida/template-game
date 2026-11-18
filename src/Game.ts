@@ -1,5 +1,6 @@
 import { Application, Assets, type AssetsManifest } from 'pixi.js';
 
+import { SoundToggleButton } from './components';
 import { HEIGHT, WIDTH } from './constants';
 import { SceneManager } from './display';
 import { GameScene, InfoScene, MainScene } from './scenes';
@@ -19,6 +20,11 @@ export class Game extends Application {
     this._sceneManager.addScene(new MainScene());
     this._sceneManager.addScene(new InfoScene());
     this._sceneManager.addScene(new GameScene());
+
+    const soundButton = new SoundToggleButton();
+    soundButton.x = soundButton.width;
+    soundButton.y = soundButton.height;
+    this.stage.addChild(soundButton);
   }
 
   public static async load(): Promise<void> {
