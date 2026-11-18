@@ -34,3 +34,9 @@ export class TextButton extends ButtonBase {
     this._text.text = String(value);
   }
 }
+
+export class InfoButton extends ButtonBase {
+  constructor() {
+    super(Assets.get('atlas_0').textures.button_info);
+  }
+}

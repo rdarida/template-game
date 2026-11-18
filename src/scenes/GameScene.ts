@@ -1,9 +1,11 @@
 import { Text } from 'pixi.js';
 
 import { TextButton } from '../components';
-import { HEIGHT, SceneName, WIDTH } from '../constants';
+import { HEIGHT, WIDTH } from '../constants';
 import { Scene } from '../display';
 import { GameEvent, SceneEvent } from '../events';
+
+import { SceneName } from './SceneName';
 
 export class GameScene extends Scene {
   private _score: number;
