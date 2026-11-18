@@ -1,3 +1,5 @@
+import { MathUtil } from '../utils';
+
 export type Riddle = {
   score: number;
   values: number[];
@@ -10,6 +12,12 @@ export class Logic {
     values: [0, 0, 0],
     answers: [0, 0, 0]
   };
+
+  private static readonly PATTERNS = [
+    [-20, -10, 0],
+    [-10, 0, 10],
+    [0, 10, 20]
+  ];
 
   private _score = 0;
   private _riddle = Logic.DEFAULT_RIDDLE;
@@ -24,10 +32,20 @@ export class Logic {
   }
 
   public getRiddle(): Riddle {
+    const values = MathUtil.shuffle([
+      1 + Math.floor(Math.random() * 33),
+      33 + Math.floor(Math.random() * 33),
+      66 + Math.floor(Math.random() * 33)
+    ]);
+
+    const sum = values.reduce((p, c) => p + c, 0);
+    const pattern = MathUtil.shuffle(Logic.PATTERNS)[0];
+    const answers = pattern.map(v => sum + v);
+
     this._riddle = {
       score: this._score,
-      values: [100, 100, 100],
-      answers: [300, 400, 500]
+      values,
+      answers: MathUtil.shuffle(answers)
     };
 
     return this._riddle;
