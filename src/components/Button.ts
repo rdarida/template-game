@@ -40,3 +40,9 @@ export class InfoButton extends ButtonBase {
     super(Assets.get('atlas_0').textures.button_info);
   }
 }
+
+export class CloseButton extends ButtonBase {
+  constructor() {
+    super(Assets.get('atlas_0').textures.button_close);
+  }
+}

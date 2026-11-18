@@ -27,5 +27,9 @@ export class MainScene extends Scene {
     playButton.on('pointertap', () =>
       this.emit(SceneEvent.EVENT, SceneName.GAME)
     );
+
+    infoButton.on('pointertap', () =>
+      this.emit(SceneEvent.EVENT, SceneName.INFO)
+    );
   }
 }
