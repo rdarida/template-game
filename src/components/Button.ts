@@ -58,6 +58,24 @@ export class MenuButton extends ButtonBase {
   }
 }
 
+export class HomeButton extends ButtonBase {
+  constructor() {
+    super(Assets.get('atlas_0').textures.button_home);
+  }
+}
+
+export class ContinueButton extends ButtonBase {
+  constructor() {
+    super(Assets.get('atlas_0').textures.button_continue);
+  }
+}
+
+export class PlayAgainButton extends ButtonBase {
+  constructor() {
+    super(Assets.get('atlas_0').textures.button_playagain);
+  }
+}
+
 export class TextButton extends ButtonBase {
   private readonly _text: Text;
 
