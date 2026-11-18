@@ -1,3 +1,5 @@
+import { Graphics } from 'pixi.js';
+
 import { Board, GameOverPanel, MenuButton, PausePanel } from '../components';
 import { HEIGHT, WIDTH } from '../constants';
 import { Scene } from '../display';
@@ -9,6 +11,7 @@ export class GameScene extends Scene {
   private _score: number;
   private readonly _menuButton: MenuButton;
   private readonly _board: Board;
+  private readonly _shade: Graphics;
   private readonly _gameOverPanel: GameOverPanel;
   private readonly _pausePanel: PausePanel;
 
@@ -26,6 +29,12 @@ export class GameScene extends Scene {
     this._board.x = Math.round(WIDTH * 0.5);
     this._board.y = Math.round(HEIGHT * 0.5);
     this.addChild(this._board);
+
+    this._shade = new Graphics();
+    this._shade.beginFill(0x000000, 0.75);
+    this._shade.drawRect(0, 0, WIDTH, HEIGHT);
+    this._shade.endFill();
+    this.addChild(this._shade);
 
     this._gameOverPanel = new GameOverPanel();
     this._gameOverPanel.x = Math.round(WIDTH * 0.5);
@@ -62,6 +71,7 @@ export class GameScene extends Scene {
       case GameEvent.PLAY:
         this._menuButton.enable();
         this._board.init(this._score);
+        this._shade.visible = false;
         this._gameOverPanel.disable(true);
         this._pausePanel.disable(true);
         break;
@@ -75,12 +85,14 @@ export class GameScene extends Scene {
 
         this._menuButton.disable(true);
         this._board.disable();
+        this._shade.visible = true;
         this._gameOverPanel.show(this._score);
         break;
 
       case GameEvent.PAUSE:
         this._menuButton.disable(true);
         this._board.disable();
+        this._shade.visible = true;
         this._pausePanel.enable();
         break;
 
@@ -91,6 +103,7 @@ export class GameScene extends Scene {
       case GameEvent.CONTINUE:
         this._menuButton.enable();
         this._board.enable();
+        this._shade.visible = false;
         this._pausePanel.disable(true);
         break;
     }
