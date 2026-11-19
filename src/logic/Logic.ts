@@ -1,10 +1,15 @@
+import { Assets } from 'pixi.js';
+
 import { MathUtil } from '../utils';
 
-export type Riddle = {
-  score: number;
+type Data = {
   values: number[];
   answers: number[];
 };
+
+export type Riddle = {
+  score: number;
+} & Data;
 
 export class Logic {
   private static readonly DEFAULT_RIDDLE: Riddle = {
@@ -13,14 +18,9 @@ export class Logic {
     answers: [0, 0, 0]
   };
 
-  private static readonly PATTERNS = [
-    [-20, -10, 0],
-    [-10, 0, 10],
-    [0, 10, 20]
-  ];
-
   private _score = 0;
   private _riddle = Logic.DEFAULT_RIDDLE;
+  private readonly _riddles = Assets.get<Data[]>('data');
 
   public init(): void {
     this._score = 0;
@@ -32,15 +32,8 @@ export class Logic {
   }
 
   public getRiddle(): Riddle {
-    const values = MathUtil.shuffle([
-      1 + Math.floor(Math.random() * 33),
-      33 + Math.floor(Math.random() * 33),
-      66 + Math.floor(Math.random() * 33)
-    ]);
-
-    const sum = values.reduce((p, c) => p + c, 0);
-    const pattern = MathUtil.shuffle(Logic.PATTERNS)[0];
-    const answers = pattern.map(v => sum + v);
+    const { values, answers } =
+      this._riddles[this._score % this._riddles.length];
 
     this._riddle = {
       score: this._score,

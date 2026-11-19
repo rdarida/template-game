@@ -14,7 +14,8 @@
     "dev": "vite",
     "prebuild": "npm run assetpack",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate": "node ./scripts/generate.js"
   },
   "dependencies": {
     "@pixi/sound": ">=5.2.3 <6.0.0",

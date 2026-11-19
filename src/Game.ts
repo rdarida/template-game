@@ -42,7 +42,8 @@ export class Game extends Application {
               alias: 'Roboto Condensed Black',
               src: 'RobotoCondensed-Black.woff2'
             },
-            { alias: 'click', src: 'sounds/click.mp3' }
+            { alias: 'click', src: 'sounds/click.mp3' },
+            { alias: 'data', src: 'data.json' }
           ]
         }
       ]
